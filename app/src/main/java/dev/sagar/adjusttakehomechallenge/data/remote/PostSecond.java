@@ -75,6 +75,6 @@ public class PostSecond extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        result.processFinish(s);
+        result.onPostResponse(s);
     }
 }

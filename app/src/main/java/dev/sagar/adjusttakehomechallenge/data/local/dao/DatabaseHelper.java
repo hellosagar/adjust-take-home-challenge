@@ -91,15 +91,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     cursor.getInt(cursor.getColumnIndexOrThrow(TimeEntity.COLUMN_IS_SYNCED)),
                     cursor.getLong(cursor.getColumnIndexOrThrow(TimeEntity.COLUMN_CREATED_TIME))
             );
-
-            // close the db connection
-            db.close();
+            cursor.close();
 
             return timeEntity;
         } catch (Exception e) {
-
-            // close the db connection
-            db.close();
+            cursor.close();
 
             return null;
         }
