@@ -93,13 +93,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             );
 
             // close the db connection
-            cursor.close();
+            db.close();
 
             return timeEntity;
         } catch (Exception e) {
 
             // close the db connection
-            cursor.close();
+            db.close();
 
             return null;
         }
@@ -156,6 +156,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(TimeEntity.COLUMN_IS_SYNCED, 1);
+
+        // updating row
+        db.update(TimeEntity.TABLE_NAME, values, TimeEntity.COLUMN_ID + " = ?",
+                new String[]{String.valueOf(entity.getId())});
+    }
+
+    public void markUnSync(String second) {
+        TimeEntity entity = getTime(second);
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(TimeEntity.COLUMN_IS_SYNCED, -1);
 
         // updating row
         db.update(TimeEntity.TABLE_NAME, values, TimeEntity.COLUMN_ID + " = ?",

@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        databaseHelper = new DatabaseHelper(MainActivity.this);
+        databaseHelper = new DatabaseHelper(this);
         internetChecker = new InternetChecker(MainActivity.this);
 
         initViews();
@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             new Thread(() -> {
                 int second = Integer.parseInt(TimeUtil.getCurrentSecond());
                 boolean insertStatus = databaseHelper.insertTime(second);
-
                 if (insertStatus) {
                     Log.d("Second inserted: ", String.valueOf(second));
                     if (internetChecker.hasInternetConnection()) {
@@ -88,7 +87,11 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 JSONObject object = new JSONObject(output);
                 String second = (String) object.get("seconds");
                 int id = (int) object.get("id");
-                databaseHelper.markSync(second);
+                if (id == -1) {
+                    databaseHelper.markUnSync(second);
+                } else {
+                    databaseHelper.markSync(second);
+                }
                 Log.d("Mark Synced", "Seconds: " + second + " and id: " + id);
             } catch (Exception e) {
                 e.printStackTrace();

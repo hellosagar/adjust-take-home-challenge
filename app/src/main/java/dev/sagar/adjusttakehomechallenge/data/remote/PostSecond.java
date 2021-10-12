@@ -59,6 +59,10 @@ public class PostSecond extends AsyncTask<Void, Void, String> {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return "{\n" +
+                    "    \"seconds\": \"" + second + "\",\n" +
+                    "    \"id\": -1\n" +
+                    "}";
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
