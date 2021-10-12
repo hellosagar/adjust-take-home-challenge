@@ -68,7 +68,6 @@ public class PostSecond extends AsyncTask<Void, Void, String> {
                 urlConnection.disconnect();
             }
         }
-        Log.d("Posted second:", second);
         return output.toString();
     }
 

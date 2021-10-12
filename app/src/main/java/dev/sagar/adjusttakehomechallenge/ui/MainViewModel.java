@@ -32,7 +32,6 @@ public class MainViewModel implements AsyncResponse {
             boolean insertStatus = databaseHelper.insertTime(second);
 
             if (insertStatus) {
-                Log.d("Second inserted: ", String.valueOf(second));
                 if (internetChecker.hasInternetConnection()) {
                     databaseHelper.markInProgress(String.valueOf(second));
                     PostSecond req = new PostSecond(this, String.valueOf(second));
@@ -75,7 +74,7 @@ public class MainViewModel implements AsyncResponse {
                 } else {
                     databaseHelper.markSync(second);
                 }
-                Log.d("Mark Synced", "Seconds: " + second + " and id: " + id);
+                Log.d("MainActivity", "Seconds: " + second + " and id: " + id);
             } catch (Exception e) {
                 e.printStackTrace();
             }
