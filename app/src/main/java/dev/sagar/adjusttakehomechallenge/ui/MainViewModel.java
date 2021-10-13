@@ -14,6 +14,10 @@ import dev.sagar.adjusttakehomechallenge.data.remote.PostSecond;
 import dev.sagar.adjusttakehomechallenge.util.InternetChecker;
 import dev.sagar.adjusttakehomechallenge.util.TimeUtil;
 
+/**
+ * This class contains the business logic of operations in local DB and posting data to server
+ * Here its not extended to [{@link androidx.lifecycle.ViewModel}] because we don't have a usecase of it according to our task right now.
+ */
 public class MainViewModel implements AsyncResponse {
 
     private DatabaseHelper databaseHelper;
@@ -52,9 +56,9 @@ public class MainViewModel implements AsyncResponse {
 
     private void syncTime() {
         new Thread(() -> {
-            List<TimeEntity> seconds = databaseHelper.getAllUnSyncedTime();
-            for (int i = 0; i < seconds.size(); i++) {
-                if (internetChecker.hasInternetConnection()) {
+            if (internetChecker.hasInternetConnection()) {
+                List<TimeEntity> seconds = databaseHelper.getAllUnSyncedTime();
+                for (int i = 0; i < seconds.size(); i++) {
                     PostSecond postSecond = new PostSecond(this, String.valueOf(seconds.get(i).getSecond()));
                     postSecond.execute();
                 }
