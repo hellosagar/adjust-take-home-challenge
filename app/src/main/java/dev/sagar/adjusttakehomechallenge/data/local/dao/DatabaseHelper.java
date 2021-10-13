@@ -66,9 +66,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // insert row
         long insert = db.insert(TimeEntity.TABLE_NAME, null, values);
 
-        // close db connection
-        db.close();
-
         return insert != -1;
     }
 
@@ -127,8 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
-        // close db connection
-        db.close();
+        cursor.close();
 
         // return second list
         return seconds;
